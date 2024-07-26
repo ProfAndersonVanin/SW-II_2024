@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: API de Cadastro de Clientes
+  description: API para gerenciar o cadastramento de clientes.
+  version: 1.0.0
+servers:
+  - url: http://localhost
+paths:
+  /api_clientes/api.php:
+    get:
+      summary: Listar todos os clientes
+      responses:
+        '200':
+          description: Lista de clientes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    nome:
+                      type: string
+                      example: João Silva
+                    email:
+                      type: string
+                      example: joao.silva@example.com
+                    telefone:
+                      type: string
+                      example: 123456789
+    post:
+      summary: Criar um novo cliente
+      requestBody:
+        description: Dados do cliente para criar
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                telefone:
+                  type: string
+              required:
+                - nome
+                - email
+      responses:
+        '201':
+          description: Cliente criado com sucesso
+        '500':
+          description: Erro ao criar cliente
+  /api_clientes/api.php/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Obter um cliente específico
+      responses:
+        '200':
+          description: Detalhes do cliente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  nome:
+                    type: string
+                    example: João Silva
+                  email:
+                    type: string
+                    example: joao.silva@example.com
+                  telefone:
+                    type: string
+                    example: 123456789
+        '404':
+          description: Cliente não encontrado
+    put:
+      summary: Atualizar um cliente existente
+      requestBody:
+        description: Dados do cliente para atualizar
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                email:
+                  type: string
+                telefone:
+                  type: string
+              required:
+                - nome
+                - email
+      responses:
+        '200':
+          description: Cliente atualizado com sucesso
+        '404':
+          description: Cliente não encontrado
+        '500':
+          description: Erro ao atualizar cliente
+    delete:
+      summary: Deletar um cliente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente deletado com sucesso
+        '404':
+          description: Cliente não encontrado
+        '500':
+          description: Erro ao deletar cliente
